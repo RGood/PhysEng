@@ -3,8 +3,8 @@ require "./PhysEng"
 uni = Universe.new([],0.003) #creates a universe space with no planets and a max delta time per calculation of 7 milliseconds
 
 uni.addBody(CB.new("Mass 1",5972198600000000000000000,[0,0,0])) # adds a body with 1000 kg mass to the universe at location 10 meters by 10 meters by 0 meters
-uni.addBody(CB.new("Mass 2",500000000000000000,[0,6367500,0],[7000,0,0])) # adds a body with 500 kg mass to the universe at location 0 meters by 10 meters by 5 meters
-uni.addBody(CB.new("Mass 3",200000,[0,6387500,0],[7200,0,0])) # adds a body with 2000 kg mass to the universe at location 7 meters by 0 meters by 8 meters
+uni.addBody(CB.new("Mass 2",5,[0,10,0],[0,0,0])) # adds a body with 500 kg mass to the universe at location 0 meters by 10 meters by 5 meters
+#uni.addBody(CB.new("Mass 3",200000,[0,6387500,0],[7200,0,0])) # adds a body with 2000 kg mass to the universe at location 7 meters by 0 meters by 8 meters
 uni.reportAll # list the initial positions of all of the bodies
 
 location = File.open("planetLocation.csv",'w')
@@ -18,20 +18,20 @@ pos = uni.reportPos("Mass 2")
 location.write(pos[0].to_s+","+pos[1].to_s+"\n")
 
 thread.run # begin the simulation
-
-for i in 0..4000 # print 5 reports over 5 seconds about the location of all of the bodies in the universe
+runtime = 10
+for i in 0..runtime # print 5 reports over 5 seconds about the location of all of the bodies in the universe
 	#puts("##########Report "+i.to_s+"##########")
-	if(i == 1000)
+	if(i == runtime/4)
 		puts("25%")
-	elsif(i == 2000)
+	elsif(i == runtime/2)
 		puts("50%")
-	elsif(i==3000)
+	elsif(i==runtime*3/4)
 		puts("75%")
-	elsif(i==4000)
+	elsif(i==runtime)
 		puts("100%")
 	end
-	sleep(1)
-	pos = uni.reportPos("Mass 3")
+	sleep(0)
+	pos = uni.reportPos("Mass 2")
 	location.write(pos[0].to_s+","+pos[1].to_s+"\n")
 	#puts("#######End of report########")
 end
